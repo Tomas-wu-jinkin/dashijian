@@ -42,9 +42,12 @@ function initTable() {
         state: "可用",
       },
     ],
+    total: 1,
   };
   var htmlStr = template("tpl-table", res);
   $("tbody").html(htmlStr);
+  // 调用渲染分页的方法
+  renderPage(res.total);
 }
 // 初始化文章分类的方法
 function initCate() {
@@ -58,5 +61,14 @@ function initCate() {
   var htmlStr = template("tpl-cate", res);
   $("[name=cate_id]").html(htmlStr);
   // 通过 layui 重新渲染表单区域的UI结构
-  form.render();
+  layui.form.render();
+}
+function renderPage(total) {
+  // 调用 laypage.render() 方法来渲染分页的结构
+  layui.laypage.render({
+    elem: "pageBox", // 分页容器的 Id
+    count: total, // 总数据条数
+    limit: 10, // 每页显示几条数据
+    curr: 1, // 设置默认被选中的分页
+  });
 }
